@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React from 'react'
 import './App.css';
 
@@ -63,10 +64,17 @@ class SearchForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.onPhotoSearch({ photoUrls: [
-      'https://via.placeholder.com/300',
-      'https://via.placeholder.com/400'
-    ]})
+    const { camera, sol } = this.state
+
+    axios({
+      method: 'post',
+      url: `http://localhost:3001/?camera=${camera}&sol=${sol}`
+    })
+    .then(result => this.props.onPhotoSearch(result.data))
+    .catch(error => { 
+      console.error('An error has occured while submitting the form. See below:')
+      throw error 
+    })
   }
 }
 
