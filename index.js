@@ -1,22 +1,25 @@
 var express = require('express')
+var path = require('path')
 var cors = require('cors')
 var morgan = require('morgan')
 var { port, nasaAPI } = require('./config')
 
 var app = express()
+
 app.use(express.json()).use(cors()).use(morgan('combined'))
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.listen(port)
 
-app.get('/', function sendGreetings(req, res) {
-  res.send({ message: 'Hello world' })
-})
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 var axios = require('axios')
 var url = require('url')
-
 app.post('/', validateParams, requestPhotos)
 
+port = process.env.port || port
+app.listen(port)
 
 // ******************************************
 
