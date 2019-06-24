@@ -1,9 +1,10 @@
 var express = require('express')
+var cors = require('cors')
 var morgan = require('morgan')
 var { port, nasaAPI } = require('./config')
 
 var app = express()
-app.use(express.json()).use(morgan('combined'))
+app.use(express.json()).use(cors()).use(morgan('combined'))
 
 app.listen(port)
 
