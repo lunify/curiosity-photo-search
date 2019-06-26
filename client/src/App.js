@@ -12,7 +12,14 @@ function Photo(props) {
 
 function PhotosList(props) {
   const elements = props.urls.map(url => <Photo key={url} url={url} />)
-  return <div className="App-body">{elements}</div>
+  return (
+    <div className="App-body">
+      {!props.urls.length
+        ? <p>There are no items to display</p>
+        : elements
+      }
+    </div>
+  )
 }
 
 class SearchForm extends React.Component {
