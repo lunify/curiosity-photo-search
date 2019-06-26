@@ -13,6 +13,10 @@
   max-width: 800px;
 }
 
+.App-header, .App-body {
+  padding: 0 30px;
+}
+
 .App-header {
   display: flex;
   flex-direction: column;
@@ -20,12 +24,17 @@
   justify-content: center;
 }
 
-.App-link {
-  color: #61dafb;
+.App-figure {
+  margin-top: 10px;
+  margin-bottom: 10px; 
 }
 
 .App-img {
   width: 100%;
+}
+
+.App-link {
+  color: #61dafb;
 }
 
 label {
