@@ -4,15 +4,15 @@ import './App.css';
 
 function Photo(props) {
   return (
-    <figure>
-      <img src={props.url} alt="" />
+    <figure className="App-figure">
+      <img className="App-img" src={props.url} alt="" />
     </figure>
   )
 }
 
 function PhotosList(props) {
   const elements = props.urls.map(url => <Photo key={url} url={url} />)
-  return <div>{elements}</div>
+  return <div className="App-body">{elements}</div>
 }
 
 class SearchForm extends React.Component {

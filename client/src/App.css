@@ -1,6 +1,13 @@
 .App {
   text-align: center;
   background-color: #282c34;
+  width:100%;
+  box-sizing: border-box;
+}
+
+.App-header, .App-body, .App-figure {
+  margin: 0 auto;
+  max-width: 800px;
 }
 
 .App-header {
@@ -15,6 +22,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.App-img {
+  width: 100%;
 }
 
 label {
