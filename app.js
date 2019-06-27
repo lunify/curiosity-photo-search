@@ -6,8 +6,14 @@ var { port, nasaAPI } = require('./config')
 var app = express()
 app.use(express.json()).use(cors()).use(morgan('combined'))
 
+
 var axios = require('axios')
 app.post('/api/search', validateParams, requestPhotos)
+
+// Deployment code for heroku
+var path = require('path')
+app.use(express.static(path.join(__dirname, 'client/build')))
+app.get('*', (req, res) => { res.sendFile(path.join(__dirname + '/client/build/index.html')) })
 
 app.listen(port)
 

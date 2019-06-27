@@ -52,7 +52,7 @@ class SearchForm extends React.Component {
     e.preventDefault();
     const { camera, sol } = this.state
 
-    axios.post('http://localhost:3001/api/search', { camera, sol })
+    axios.post('api/search', { camera, sol })
       .then(result => this.props.onPhotoSearch(result.data))
       .catch(error => {
         console.error('An error has occured while submitting the form. See below:')
