@@ -7,7 +7,7 @@ var app = express()
 app.use(express.json()).use(cors()).use(morgan('combined'))
 
 var axios = require('axios')
-app.post('/', validateParams, requestPhotos)
+app.post('/api/search', validateParams, requestPhotos)
 
 app.listen(port)
 
