@@ -12,9 +12,9 @@ class App extends React.Component {
           <p>More on what resources NASA exposes to the public
             on <a className="App-link" href="https://api.nasa.gov/api.html">Their API page</a>
           </p>
-          <SearchForm onPhotoSearch={this.onPhotoSearch} />  
+          <SearchForm onPhotoSearch={this.onPhotoSearch} />
         </header>
-  
+
         <PhotosList photos={this.state.photos} />
       </div>
     )

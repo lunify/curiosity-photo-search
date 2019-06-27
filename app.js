@@ -36,7 +36,7 @@ function validateParams(req, res, next) {
 
 function requestPhotos(req, res) {
   var { sol, camera } = req.body
-  
+
   axios.get(nasaAPI.baseURL, { params : { sol, camera, api_key: nasaAPI.key } })
   .then(sendPhotosData)
   .catch(sendError)
