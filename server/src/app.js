@@ -6,28 +6,22 @@ var { port, nasaAPI } = require('./config')
 var app = express()
 app.use(express.json()).use(cors()).use(morgan('combined'))
 
-app.listen(port)
-
-app.get('/', function sendGreetings(req, res) {
-  res.send({ message: 'Hello world' })
-})
-
 var axios = require('axios')
-var url = require('url')
+app.post('/api/search', validateParams, requestPhotos)
 
-app.post('/', validateParams, requestPhotos)
+app.listen(port)
 
 
 // ******************************************
 
 function validateParams(req, res, next) {
-  var { query } = url.parse(req.url, true)
+  var { sol, camera } = req.body
 
-  if (!query.sol || !query.camera) {
+  if (!sol || !camera) {
     return res.status(400).send({ message: 'Missing query param' })
   }
 
-  if (Object.is(NaN, Number(query.sol)) || !Number.isInteger(Number(query.sol)) || query.sol < 0) {
+  if (Object.is(NaN, Number(sol)) || !Number.isInteger(Number(sol)) || sol < 0) {
     return res.status(400).send({ message: 'Invalid sol value.' })
   }
 
@@ -35,9 +29,10 @@ function validateParams(req, res, next) {
 }
 
 function requestPhotos(req, res) {
-  var { query } = url.parse(req.url, true)
-  axios.get(`${nasaAPI.baseURL}?sol=${query.sol}&camera=${query.camera}&api_key=${nasaAPI.key}`)
-  .then(sendPhotoUrls)
+  var { sol, camera } = req.body
+  
+  axios.get(nasaAPI.baseURL, { params : { sol, camera, api_key: nasaAPI.key } })
+  .then(sendPhotosData)
   .catch(sendError)
 
 
@@ -46,11 +41,15 @@ function requestPhotos(req, res) {
     res.status(500).send(err)
   }
 
-  function sendPhotoUrls({ data }) {
-    res.send({ photoUrls: data.photos.map(getUrl) })
+  function sendPhotosData({ data }) {
+    res.send({ photos: data.photos.map(getData) })
   }
 }
 
-function getUrl(photo) {
-  return photo.img_src
+function getData({ id, img_src, earth_date}) {
+  return {
+    id,
+    src: img_src.replace('http://', 'https://'),
+    date: earth_date
+  }
 }
