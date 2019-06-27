@@ -2,16 +2,17 @@ import axios from 'axios'
 import React from 'react'
 import './App.css';
 
-function Photo(props) {
+function Photo({ src, date }) {
   return (
     <figure>
-      <img src={props.url} alt="" />
+      <img src={src} alt="Mars landscape" />
+      <figcaption>Photo taken by curiosity on {date}</figcaption>
     </figure>
   )
 }
 
-function PhotosList(props) {
-  const elements = props.urls.map(url => <Photo key={url} url={url} />)
+function PhotosList({ photos }) {
+  const elements = photos.map(photo => <Photo key={photo.id} src={photo.src} date={photo.date} />)
   return <div>{elements}</div>
 }
 
@@ -87,7 +88,7 @@ class App extends React.Component {
           <SearchForm onPhotoSearch={this.onPhotoSearch} />  
         </header>
   
-        <PhotosList urls={this.state.photoUrls} />
+        <PhotosList photos={this.state.photos} />
       </div>
     )
   }
@@ -95,11 +96,11 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.onPhotoSearch = this.onPhotoSearch.bind(this)
-    this.state = { photoUrls: [] }
+    this.state = { photos: [] }
   }
 
   onPhotoSearch(data) {
-    this.setState({ photoUrls: data.photoUrls })
+    this.setState({ photos: data.photos })
   }
 }
 

@@ -32,7 +32,7 @@ function requestPhotos(req, res) {
   var { sol, camera } = req.body
   
   axios.get(nasaAPI.baseURL, { params : { sol, camera, api_key: nasaAPI.key } })
-  .then(sendPhotoUrls)
+  .then(sendPhotosData)
   .catch(sendError)
 
 
@@ -41,11 +41,15 @@ function requestPhotos(req, res) {
     res.status(500).send(err)
   }
 
-  function sendPhotoUrls({ data }) {
-    res.send({ photoUrls: data.photos.map(getUrl) })
+  function sendPhotosData({ data }) {
+    res.send({ photos: data.photos.map(getData) })
   }
 }
 
-function getUrl(photo) {
-  return photo.img_src
+function getData({ id, img_src, earth_date}) {
+  return {
+    id,
+    src: img_src.replace('http://', 'https://'),
+    date: earth_date
+  }
 }
